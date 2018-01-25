@@ -3,7 +3,7 @@
 // RENDER CATEGORY LIST
 function categoryListRender($lang)
 {
-	require('../config.php');
+	require(CONFIG_PATH);
 	$stmt = $mysqli->prepare('SELECT c.`id`, c.`parent_id`, c.`status`, i.`name`, i.`url`, c.`priority`
                             FROM '. DB_TABLE_CATEGORY .' c
                             LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
@@ -38,7 +38,7 @@ function categoryListRender($lang)
 // RENDER SUBCATEGORIES IN CATEGORY LIST
 function categorySubcategoryListRender($row, $ids, $lang)
 {
-  require('../config.php');
+  require(CONFIG_PATH);
 	$stmt = $mysqli->prepare('SELECT c.`id`, c.`parent_id`, c.`status`, i.`name`, i.`url`, c.`priority`
                             FROM '. DB_TABLE_CATEGORY .' c
                             LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
@@ -71,7 +71,7 @@ function categorySubcategoryListRender($row, $ids, $lang)
 // RENDER CATEGORY EDIT DATA
 function categoryEditRender($categoryId, $lang)
 {
-  require('../config.php');
+  require(CONFIG_PATH);
   $stmt = $mysqli->prepare('SELECT c.`id`, c.`parent_id`, c.`status`, c.`image`, c.`priority`, i.`name`, i.`content`, i.`url`, i.`meta_title`, i.`meta_description`, i.`h1_title`
                             FROM '. DB_TABLE_CATEGORY .' c
                             LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
@@ -88,7 +88,7 @@ function categoryEditRender($categoryId, $lang)
 // RENDER SELECT CATEGORIES - WITHOUT SELECTED
 function categoriesAddProductRender($lang)
 {
-  require('../config.php');
+  require(CONFIG_PATH);
   $stmt = $mysqli->prepare('SELECT c.`id`, i.`name`
                             FROM '. DB_TABLE_CATEGORY .' c
                             LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
@@ -108,7 +108,7 @@ function categoriesAddProductRender($lang)
 // RENDER SELECT CATEGORIES - WITH SELECTED
 function categoriesSelectRender($categoryId, $parent_category, $lang)
 {
-  require('../config.php');
+  require(CONFIG_PATH);
   $stmt = $mysqli->prepare('SELECT c.`id`, i.`name`
                             FROM '. DB_TABLE_CATEGORY .' c
                             LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
@@ -128,7 +128,7 @@ function categoriesSelectRender($categoryId, $parent_category, $lang)
 // CATEGORY UPDATE DATA
 function categoryUpdateData($parent_id, $status, $image, $priority, $date_updated, $id)
 {
-  require('../config.php');
+  require(CONFIG_PATH);
   if (!empty($image))
     $imageUpdate = 'images/' . $image;
   else
@@ -143,7 +143,7 @@ function categoryUpdateData($parent_id, $status, $image, $priority, $date_update
 // CATEGORY UPDATE INFO
 function categoryUpdateInfo($name, $content, $url, $meta_title, $meta_description, $h1_title, $id, $lang)
 {
-  require('../config.php');
+  require(CONFIG_PATH);
   $stmt = $mysqli->prepare('UPDATE '. DB_TABLE_CATEGORY_INFO .' SET `name` = ?, `content` = ?, `url` = ?, `meta_title` = ?, `meta_description` = ?, `h1_title` = ? WHERE `category_id` = ? AND `lang_code` = ?');
   $stmt->bind_param("ssssssis", $name, $content, $url, $meta_title, $meta_description, $h1_title, $id, $lang);
   $stmt->execute();
@@ -154,7 +154,7 @@ function categoryUpdateInfo($name, $content, $url, $meta_title, $meta_descriptio
 // CATEGORY GET LAST INSERT ID
 function categoryGetLastInsertId()
 {
-  require('../config.php');
+  require(CONFIG_PATH);
   $stmt = $mysqli->prepare('SELECT `id` FROM '. DB_TABLE_CATEGORY .' ORDER BY `id` DESC LIMIT 1');
   $stmt->execute();
   $stmt->bind_result($id);
@@ -167,7 +167,7 @@ function categoryGetLastInsertId()
 // CATEGORY ADD DATA
 function categoryAddData($parent_id, $status, $image, $priority, $date_created)
 {
-  require('../config.php');
+  require(CONFIG_PATH);
   $newId = mysqli_insert_id($mysqli);
   if (!empty($image))
     $imageAdd = 'images/'. $image;
@@ -183,7 +183,7 @@ function categoryAddData($parent_id, $status, $image, $priority, $date_created)
 // CATEGORY ADD INFO
 function categoryAddInfo($lang, $name, $content, $url, $meta_title, $meta_description, $h1_title)
 {
-  require('../config.php');
+  require(CONFIG_PATH);
   $lastId = categoryGetLastInsertId();
   $newId = mysqli_insert_id($mysqli);
   $stmt = $mysqli->prepare('INSERT INTO '. DB_TABLE_CATEGORY_INFO .' (`id`, `lang_code`, `category_id`, `name`, `content`, `url`, `meta_title`, `meta_description`, `h1_title`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
@@ -196,7 +196,7 @@ function categoryAddInfo($lang, $name, $content, $url, $meta_title, $meta_descri
 // CATEGORY REMOVE DATA
 function categoryRemoveData($categoryId)
 {
-  require('../config.php');
+  require(CONFIG_PATH);
   $stmt = $mysqli->prepare('DELETE FROM '. DB_TABLE_CATEGORY .' WHERE `id` = ?');
   $stmt->bind_param("i", $categoryId);
   $stmt->execute();
@@ -207,7 +207,7 @@ function categoryRemoveData($categoryId)
 // CATEGORY REMOVE INFO
 function categoryRemoveInfo($categoryId)
 {
-  require('../config.php');
+  require(CONFIG_PATH);
   $stmt = $mysqli->prepare('DELETE FROM '. DB_TABLE_CATEGORY_INFO .' WHERE `category_id` = ?');
   $stmt->bind_param("i", $categoryId);
   $stmt->execute();
