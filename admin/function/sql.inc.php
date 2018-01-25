@@ -3,7 +3,7 @@
 // GENERAL SETTING SMTP EMAIL FOR ORDERS
 function generalSetting($controller)
 {
-  require('../config.php');
+  require(CONFIG_PATH);
   $stmt = $mysqli->prepare('SELECT `value` FROM '. DB_TABLE_SETTING .' WHERE `controller` = ?');
   $stmt->bind_param("s", $controller);
   $stmt->execute();
