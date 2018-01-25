@@ -5,11 +5,11 @@ function categoryListRender($lang)
 {
 	require(CONFIG_PATH);
 	$stmt = $mysqli->prepare('SELECT c.`id`, c.`parent_id`, c.`status`, i.`name`, i.`url`, c.`priority`
-			FROM '. DB_TABLE_CATEGORY .' c
-			LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
-			WHERE i.`lang_code` = ?
-			GROUP BY c.`id`, i.`name`, i.`url`
-			ORDER BY c.`priority` ASC');
+          FROM '. DB_TABLE_CATEGORY .' c
+          LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
+          WHERE i.`lang_code` = ?
+          GROUP BY c.`id`, i.`name`, i.`url`
+          ORDER BY c.`priority` ASC');
 	$stmt->bind_param("s", $lang);
 	$stmt->execute();
 	$stmt->bind_result($id, $parent_id, $status, $name, $url, $priority);
@@ -40,11 +40,11 @@ function categorySubcategoryListRender($row, $ids, $lang)
 {
 	require(CONFIG_PATH);
 	$stmt = $mysqli->prepare('SELECT c.`id`, c.`parent_id`, c.`status`, i.`name`, i.`url`, c.`priority`
-			FROM '. DB_TABLE_CATEGORY .' c
-			LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
-			WHERE i.`lang_code` = ?
-			GROUP BY c.`id`, i.`name`, i.`url`
-			ORDER BY c.`priority` ASC');
+          FROM '. DB_TABLE_CATEGORY .' c
+          LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
+          WHERE i.`lang_code` = ?
+          GROUP BY c.`id`, i.`name`, i.`url`
+          ORDER BY c.`priority` ASC');
 	$stmt->bind_param("s", $lang);
 	$stmt->execute();
 	$stmt->bind_result($id, $parent_id, $status, $name, $url, $priority);
@@ -73,9 +73,9 @@ function categoryEditRender($categoryId, $lang)
 {
 	require(CONFIG_PATH);
 	$stmt = $mysqli->prepare('SELECT c.`id`, c.`parent_id`, c.`status`, c.`image`, c.`priority`, i.`name`, i.`content`, i.`url`, i.`meta_title`, i.`meta_description`, i.`h1_title`
-			FROM '. DB_TABLE_CATEGORY .' c
-			LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
-			WHERE c.`id` = ? AND i.`lang_code` = ?');
+          FROM '. DB_TABLE_CATEGORY .' c
+          LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
+          WHERE c.`id` = ? AND i.`lang_code` = ?');
 	$stmt->bind_param("is", $categoryId, $lang);
 	$stmt->execute();
 	$stmt->bind_result($id, $parent_id, $status, $image, $priority, $name, $content, $url, $meta_title, $meta_description, $h1_title);
@@ -90,10 +90,10 @@ function categoriesAddProductRender($lang)
 {
 	require(CONFIG_PATH);
 	$stmt = $mysqli->prepare('SELECT c.`id`, i.`name`
-			FROM '. DB_TABLE_CATEGORY .' c
-			LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
-			WHERE i.`lang_code` = ?
-			ORDER BY c.`id` ASC');
+          FROM '. DB_TABLE_CATEGORY .' c
+          LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
+          WHERE i.`lang_code` = ?
+          ORDER BY c.`id` ASC');
 	$stmt->bind_param("s", $lang);
 	$stmt->execute();
 	$stmt->bind_result($id, $name);
@@ -110,10 +110,10 @@ function categoriesSelectRender($categoryId, $parent_category, $lang)
 {
 	require(CONFIG_PATH);
 	$stmt = $mysqli->prepare('SELECT c.`id`, i.`name`
-			FROM '. DB_TABLE_CATEGORY .' c
-			LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
-			WHERE i.`lang_code` = ? AND c.`id` != ?
-			ORDER BY c.`id` ASC');
+          FROM '. DB_TABLE_CATEGORY .' c
+          LEFT JOIN '. DB_TABLE_CATEGORY_INFO .' i ON c.`id` = i.`category_id`
+          WHERE i.`lang_code` = ? AND c.`id` != ?
+          ORDER BY c.`id` ASC');
 	$stmt->bind_param("si", $lang, $categoryId);
 	$stmt->execute();
 	$stmt->bind_result($id, $name);
