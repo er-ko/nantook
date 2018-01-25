@@ -11,26 +11,26 @@ function categoryListRender($lang)
                             GROUP BY c.`id`, i.`name`, i.`url`
                             ORDER BY c.`priority` ASC');
 	$stmt->bind_param("s", $lang);
-  $stmt->execute();
+	$stmt->execute();
 	$stmt->bind_result($id, $parent_id, $status, $name, $url, $priority);
-  $ids = '';
-  echo ('<ul>');
+	$ids = '';
+	echo ('<ul>');
 	while ($row = $stmt->fetch())
 	{
-    if ($parent_id == 0)
-    {
-      echo ('<li class="'. ($status == true ? 'category-active' : 'category-noactive') .'">');
-      echo ('<span class="btn btn-sm btn-warning" style="padding: 2px 5px !important; margin-left: 5px;">'. ($status == true ? '<i class="fa fa-eye" aria-hidden="true" title="Kategorie je viditelná"></i>' : '<i class="fa fa-eye-slash" aria-hidden="true" title="Kategorie je skrytá"></i>') .'</span>');
-      echo ('<a class="btn btn-sm btn-primary" style="padding: 3px 5px !important; margin-left: 5px;" href="index.php?shop-category&edit&category-id='. $id .'" title="Upravit kategorii"><i class="fa fa-edit" aria-hidden="true"></i></a>');
-      echo ('<a class="btn btn-sm btn-danger" style="padding: 3px 6px !important; margin-left: 5px;" href="index.php?shop-category&remove&category-id='. $id .'" title="Odstranit kategorii" data-confirm="Opravdu si přejete odstranit vybranou kategorii: '. htmlspecialchars($name) .'?"><i class="fa fa-times" aria-hidden="true"></i></a>');
-      echo ('<span class="category-list-id" style="margin: 0 10px 0 20px;">('. $id .')</span>'. htmlspecialchars($name) .'</span>');
-      echo ('<span style="margin: 0 5px; font-size: 0.8em;">('. $url .')&nbsp;|&nbsp;('. $priority .')</span>');
-      $ids = $id;
-      categorySubcategoryListRender($row, $ids, $lang);
-      echo ('</li>');
-    }
+	if ($parent_id == 0)
+	{
+		echo ('<li class="'. ($status == true ? 'category-active' : 'category-noactive') .'">');
+		echo ('<span class="btn btn-sm btn-warning" style="padding: 2px 5px !important; margin-left: 5px;">'. ($status == true ? '<i class="fa fa-eye" aria-hidden="true" title="Kategorie je viditelná"></i>' : '<i class="fa fa-eye-slash" aria-hidden="true" title="Kategorie je skrytá"></i>') .'</span>');
+		echo ('<a class="btn btn-sm btn-primary" style="padding: 3px 5px !important; margin-left: 5px;" href="index.php?shop-category&edit&category-id='. $id .'" title="Upravit kategorii"><i class="fa fa-edit" aria-hidden="true"></i></a>');
+		echo ('<a class="btn btn-sm btn-danger" style="padding: 3px 6px !important; margin-left: 5px;" href="index.php?shop-category&remove&category-id='. $id .'" title="Odstranit kategorii" data-confirm="Opravdu si přejete odstranit vybranou kategorii: '. htmlspecialchars($name) .'?"><i class="fa fa-times" aria-hidden="true"></i></a>');
+		echo ('<span class="category-list-id" style="margin: 0 10px 0 20px;">('. $id .')</span>'. htmlspecialchars($name) .'</span>');
+		echo ('<span style="margin: 0 5px; font-size: 0.8em;">('. $url .')&nbsp;|&nbsp;('. $priority .')</span>');
+		$ids = $id;
+		categorySubcategoryListRender($row, $ids, $lang);
+		echo ('</li>');
 	}
-  echo ('</ul>');
+	}
+ 	echo ('</ul>');
 	$stmt->close();
 	$mysqli->close();
 }
